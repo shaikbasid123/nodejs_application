@@ -1,13 +1,14 @@
 pipeline {
   agent any
-  
+
   environment {
-    DOCKER_REGISTRY = 'docker.io'                      
-    DOCKER_REPO = 'shaikbasit99/nestapp'   
-    GIT_REPO = 'https://github.com/shaikbasid123/nodejs_application.git'
-    K8S_MANIFEST_PATH = 'k8s/deployment.yaml'         
-    IMAGE_PLACEHOLDER = 'v1'            
+    DOCKER_REGISTRY   = 'docker.io'
+    DOCKER_REPO       = 'shaikbasit99/nestapp'
+    GIT_REPO          = 'https://github.com/shaikbasid123/nodejs_application.git'
+    K8S_MANIFEST_PATH = 'k8s/deployment.yaml'
+    IMAGE_PLACEHOLDER = 'v1'
   }
+
   stages {
     stage('Prepare Git') {
       steps {
@@ -16,7 +17,6 @@ pipeline {
             credentialsId: 'github-token',
             changelog: false,
             poll: false
-        }
       }
     }
 
@@ -56,21 +56,19 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'github-token', variable: 'GH_TOKEN')]) {
           sh '''
-          
             git checkout main || git checkout -b main
 
-           
             sed -i.bak "s|${IMAGE_PLACEHOLDER}|${IMAGE_TAG}|g" ${K8S_MANIFEST_PATH}
 
-            
             git --no-pager diff -- ${K8S_MANIFEST_PATH} || true
 
             git add ${K8S_MANIFEST_PATH}
             git commit -m "chore: update k8s image to ${DOCKER_REPO}:${IMAGE_TAG}" || echo "No changes to commit"
-       
+
             git push https://${GH_TOKEN}@${env.GIT_URL#https://} HEAD:main
           '''
         }
       }
     }
   }
+}
