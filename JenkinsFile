@@ -11,8 +11,14 @@ pipeline {
   stages {
     stage('Prepare Git') {
       steps {
-        sh 'git config --global http.postBuffer 524288000'
-        sh 'git config --global http.maxRequestBuffer 100M'
+        checkout([$class: 'GitSCM',
+          branches: [[name: '*/main']],
+          userRemoteConfigs: [[
+            url: 'https://github.com/shaikbasid123/nodejs_application.git',
+            credentialsId: 'github-token'
+          ]],
+          extensions: [[$class: 'CloneOption', depth: 1, shallow: true, noTags: false, timeout: 15]]
+        ])
       }
     }
 
