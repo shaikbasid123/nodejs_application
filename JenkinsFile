@@ -11,14 +11,12 @@ pipeline {
   stages {
     stage('Prepare Git') {
       steps {
-        checkout([$class: 'GitSCM',
-          branches: [[name: '*/main']],
-          userRemoteConfigs: [[
-            url: 'https://github.com/shaikbasid123/nodejs_application.git',
-            credentialsId: 'github-token'
-          ]],
-          extensions: [[$class: 'CloneOption', depth: 1, shallow: true, noTags: false, timeout: 15]]
-        ])
+        git branch: 'main',
+            url: 'git@github.com:org/repo.git',
+            credentialsId: 'your-cred-id',
+            changelog: false,
+            poll: false
+        }
       }
     }
 
