@@ -13,7 +13,7 @@ pipeline {
       steps {
         git branch: 'main',
             url: 'git@github.com:org/repo.git',
-            credentialsId: 'your-cred-id',
+            credentialsId: 'github-token',
             changelog: false,
             poll: false
         }
