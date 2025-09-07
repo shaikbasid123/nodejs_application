@@ -9,6 +9,12 @@ pipeline {
     IMAGE_PLACEHOLDER = 'v1'            
   }
   stages {
+    stage('Prepare Git') {
+      steps {
+        sh 'git config --global http.postBuffer 524288000'
+        sh 'git config --global http.maxRequestBuffer 100M'
+      }
+    }
 
     stage('Checkout') {
       steps {
