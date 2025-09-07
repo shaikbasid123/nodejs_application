@@ -1,19 +1,17 @@
 pipeline {
   agent {
     docker {
-      // image must have git, docker client, curl, jq, yq (optional), and node/npm installed
-      image 'nestapp:latest'  // custom image, see Dockerfile
+      image 'nestapp:latest'  
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
 
   environment {
-    // Edit these values
-    DOCKER_REGISTRY = 'docker.io'                      // docker hub
-    DOCKER_REPO = 'shaikbasit99/nestapp'   // change
+    DOCKER_REGISTRY = 'docker.io'                      
+    DOCKER_REPO = 'shaikbasit99/nestapp'   
     GIT_REPO = 'https://github.com/shaikbasid123/nodejs_application.git'
-    K8S_MANIFEST_PATH = 'k8s/deployment.yaml'          // path to manifest in repo
-    IMAGE_PLACEHOLDER = 'v1'            // placeholder in manifest
+    K8S_MANIFEST_PATH = 'k8s/deployment.yaml'         
+    IMAGE_PLACEHOLDER = 'v1'            
   }
   stages {
 
@@ -53,18 +51,18 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'github-token', variable: 'GH_TOKEN')]) {
           sh '''
-            # make sure we're on main branch
+          
             git checkout main || git checkout -b main
 
-            # replace placeholder with the new image tag in the manifest
+           
             sed -i.bak "s|${IMAGE_PLACEHOLDER}|${IMAGE_TAG}|g" ${K8S_MANIFEST_PATH}
 
-            # show changes for debugging
+            
             git --no-pager diff -- ${K8S_MANIFEST_PATH} || true
 
             git add ${K8S_MANIFEST_PATH}
             git commit -m "chore: update k8s image to ${DOCKER_REPO}:${IMAGE_TAG}" || echo "No changes to commit"
-            # push back to remote using token
+       
             git push https://${GH_TOKEN}@${env.GIT_URL#https://} HEAD:main
           '''
         }
