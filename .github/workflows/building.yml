@@ -31,12 +31,19 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # 3. Build & Push Docker Image
-      - name: Build and push Docker image
+      - name: Build & Push Backend Image
         run: |
-          IMAGE_TAG=${{ github.run_number }}
-          docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG .
-          docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          BACKEND_TAG=$backend-V{{ github.run_number }}
+          docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/backend:$BACKEND_TAG -f app/Dockerfile ./app
+          docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/backend:$BACKEND_TAG
+          echo "BACKEND_TAG=$BACKEND_TAG" >> $GITHUB_ENV
+
+      - name: Build & Push Frontend Image
+        run: |
+          FRONTEND_TAG=$frontend-V{{ github.run_number }}
+          docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/frontend:$FRONTEND_TAG -f web/Dockerfile ./web
+          docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/frontend:$FRONTEND_TAG
+          echo "FRONTEND_TAG=$FRONTEND_TAG" >> $GITHUB_ENV
 
       # 4. Update Kubernetes Deployment Manifest
       - name: Update k8s deployment with new image tag
