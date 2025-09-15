@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: shaikbasit99/node-app:v1   # replace with your Docker Hub repo
+        image: shaikbasit99/frontend:v1   # replace with your Docker Hub repo
         ports:
         - containerPort: 80
         env:
