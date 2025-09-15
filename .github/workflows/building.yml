@@ -40,7 +40,7 @@ jobs:
 
       - name: Build & Push Frontend Image
         run: |
-          FRONTEND_TAG=$frontend-V${{ github.run_number }}
+          FRONTEND_TAG=frontend-V${{ github.run_number }}
           docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/frontend:$FRONTEND_TAG -f web/Dockerfile ./web
           docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/frontend:$FRONTEND_TAG
           echo "FRONTEND_TAG=$FRONTEND_TAG" >> $GITHUB_ENV
