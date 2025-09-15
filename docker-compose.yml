@@ -12,8 +12,8 @@ services:
 
   backend:
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./app/Dockerfile
     container_name: backend
     restart: always
     env_file:
