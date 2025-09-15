@@ -50,4 +50,4 @@ jobs:
           git config user.name "${{ env.GIT_USER_NAME }}"
           git add k8s/deployment.yaml
           git commit -m "Update deployment image to version $IMAGE_TAG"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.GIT_USER_NAME }}/${{ env.GIT_REPO_NAME }} HEAD:main
+          git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/${{ env.GIT_USER_NAME }}/${{ env.GIT_REPO_NAME }} HEAD:main
