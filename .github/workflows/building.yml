@@ -41,7 +41,8 @@ jobs:
       # 4. Update Kubernetes Deployment Manifest
       - name: Update k8s deployment with new image tag
         run: |
-          sed -i "s/replaceImageTag/${IMAGE_TAG}/g" k8s/deployment.yaml
+          sed -i "s/replaceImageTag/${BACKEND_TAG}/g" k8s/backend.yaml
+          sed -i "s/replaceImageTag/${FRONTEND_TAG}/g" k8s/frontend.yaml
 
       # 5. Commit & Push updated manifest
       - name: Commit and push changes
