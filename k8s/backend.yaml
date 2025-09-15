@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: shaikbasit99/backend:v1   # replace with your Docker Hub repo
+        image: shaikbasit99/backend:replaceImageTag   # replace with your Docker Hub repo
         ports:
         - containerPort: 3000
         env:
