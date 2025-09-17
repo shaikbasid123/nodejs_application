@@ -43,4 +43,4 @@ spec:
   ports:
     - port: 5000       # service port
       targetPort: 3000 # container port
-  type: ClusterIP
+  type: NodePort
