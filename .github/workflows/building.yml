@@ -77,7 +77,7 @@ jobs:
         run: |
           kubectl apply -f k8s/backend.yaml
           kubectl apply -f k8s/frontend.yaml
-          kubectl apply -f k8s/database.yaml
+          kubectl apply -f k8s/mongo.yaml
 
       # 9. Verify rollout status
       - name: Verify Deployment
