@@ -32,11 +32,7 @@ spec:
         volumeMounts:
         - name: mongo-data
           mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 2Gi
+      volumes:   # ✅ Replace PVC with emptyDir
+      - name: mongo-data
+        emptyDir: {}
+  
