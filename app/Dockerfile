@@ -1,5 +1,5 @@
 # Use Node.js LTS image
-FROM node:18
+FROM node:20.19.4
 
 WORKDIR /usr/src/app
 
