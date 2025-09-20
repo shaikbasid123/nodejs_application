@@ -23,7 +23,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - DB_URI=mongodb://mongo:27017/library-next-api
+      - DB_URI=mongodb://mongo-service:27017/library-next-api
       - JWT_SECRET=codingwithabbas
       - JWT_EXPIRES=3d
 
