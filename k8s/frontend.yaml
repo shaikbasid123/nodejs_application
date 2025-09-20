@@ -16,8 +16,10 @@ spec:
       - name: frontend
         image: shaikbasit99/frontend:frontend-V11  # replace with your Docker Hub repo
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         env:
+        - name: HOST
+          value: "0.0.0.0" 
         - name: REACT_APP_API_URL
           value: "http://backend-service:5000"
 ---
