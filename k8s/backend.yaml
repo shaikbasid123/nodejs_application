@@ -18,6 +18,8 @@ spec:
         ports:
         - containerPort: 3000
         env:
+        - name: HOST
+          value: "0.0.0.0" 
         - name: DB_URI
           value: mongodb://mongo-service:27017/library-next-api
         - name: JWT_SECRET
