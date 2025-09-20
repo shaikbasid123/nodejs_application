@@ -12,6 +12,6 @@ RUN npm run build
 # Serve with a simple static server
 RUN npm install -g serve
 
-EXPOSE 3001
+EXPOSE 3000
 
 CMD ["npm", "start"]
